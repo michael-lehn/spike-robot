@@ -19,7 +19,8 @@ FIRMWARE_ZIP   ?= pybricks-primehub-v3.6.1.zip
 FIRMWARE_URL   ?= https://github.com/pybricks/pybricks-micropython/releases/download/v3.6.1/pybricks-primehub-v3.6.1.zip
 
 # Detect DFU device (LEGO vendor:product 0694:0008)
-DFU_OK := $(shell dfu-util -l 2>/dev/null | grep -q "\[0694:0008\]" && echo yes || echo no)
+DFU_OK := $(shell lsusb | grep -q "0694:0008" && echo yes || echo no)
+
 
 flash: $(FIRMWARE_ZIP)
 	@if [ "$(DFU_OK)" != "yes" ]; then \
